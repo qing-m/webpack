@@ -1,0 +1,10 @@
+$color: red;
+
+.helloContainer {
+  background-color: salmon;
+  span {
+    color: #ffffff;
+    background-color: $color;
+    font-size: 40px;
+  }
+}

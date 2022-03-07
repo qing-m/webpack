@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmleWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 console.log("process.env.NODE_ENV=", process.env.NODE_ENV); // 打印环境变量
 
@@ -32,8 +33,14 @@ const config = {
     // Loader 的执行顺序是固定从后往前，即按 css-loader --> style-loader 的顺序执行
     rules: [
       {
-        test: /\.css$/, //匹配所有的 css 文件
-        use: ["style-loader", "css-loader", "postcss-loader"],
+        test: /\.(s[ac]|c)ss$/i, // 匹配所有的 sass/scss/css 文件
+        use: [
+          // "style-loader",
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
+        ],
       },
     ],
   },
@@ -43,6 +50,11 @@ const config = {
     new HtmleWebpackPlugin({
       template: path.resolve(__dirname, "/src/index.html"),
       filename: "index.html",
+    }),
+
+    new MiniCssExtractPlugin({
+      // 添加插件
+      filename: "[name].[hash:8].css",
     }),
   ],
 };
