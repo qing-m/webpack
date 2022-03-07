@@ -33,7 +33,7 @@ const config = {
     rules: [
       {
         test: /\.css$/, //匹配所有的 css 文件
-        use: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
     ],
   },
