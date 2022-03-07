@@ -1,5 +1,8 @@
 const path = require("path");
+
+// html插件
 const HtmleWebpackPlugin = require("html-webpack-plugin");
+// 样式分离插件
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 console.log("process.env.NODE_ENV=", process.env.NODE_ENV); // 打印环境变量
@@ -14,7 +17,7 @@ const config = {
   devServer: {
     contentBase: path.resolve(__dirname, "webpack-dist"), // 静态文件目录
     compress: true, //是否启动压缩 gzip
-    port: 8080, // 端口号
+    port: 8088, // 端口号
     // open:true  // 是否自动打开浏览器
   },
 
@@ -32,7 +35,9 @@ const config = {
     // 配置css-loader
     // Loader 的执行顺序是固定从后往前，即按 css-loader --> style-loader 的顺序执行
     rules: [
+      // webpack5以及更高版本使用，5以下使用file-loader，url-loader
       {
+        // 关于css的loader
         test: /\.(s[ac]|c)ss$/i, // 匹配所有的 sass/scss/css 文件
         use: [
           // "style-loader",
@@ -41,6 +46,21 @@ const config = {
           "postcss-loader",
           "sass-loader",
         ],
+      },
+      {
+        // 文件loader
+        test: /\.(jpe?g|png|gif)$/i, // 匹配图片文件
+        type: "asset",
+        generator: {
+          // 输出文件位置以及文件名
+          // [ext] 自带 "." 这个与 url-loader 配置不同
+          filename: "[name][hash:8][ext]",
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 50 * 1024, //超过50kb不转 base64
+          },
+        },
       },
     ],
   },
