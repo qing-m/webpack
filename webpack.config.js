@@ -35,7 +35,6 @@ const config = {
     // 配置css-loader
     // Loader 的执行顺序是固定从后往前，即按 css-loader --> style-loader 的顺序执行
     rules: [
-      // webpack5以及更高版本使用，5以下使用file-loader，url-loader
       {
         // 关于css的loader
         test: /\.(s[ac]|c)ss$/i, // 匹配所有的 sass/scss/css 文件
@@ -47,6 +46,7 @@ const config = {
           "sass-loader",
         ],
       },
+      // webpack5以及更高版本使用，5以下使用file-loader，url-loader
       {
         // 文件loader
         test: /\.(jpe?g|png|gif)$/i, // 匹配图片文件
